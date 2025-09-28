@@ -10,20 +10,17 @@ const paymentRoutes = require('./routes/payments');
 const adminRoutes = require('./routes/admin');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Railway provides PORT dynamically
 
 // CORS for production
 app.use(cors({
-    origin: '*',  // Allow all origins for now; update in production if needed
+    origin: '*',
     credentials: true
 }));
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Serve static files from frontend
-app.use(express.static(path.join(__dirname, 'frontend')));
 
 // API Routes
 app.use('/api/tickets', ticketRoutes);
@@ -53,10 +50,10 @@ app.get('/', (req, res) => {
 });
 
 // Serve frontend for all other routes
+app.use(express.static(path.join(__dirname, 'frontend')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/index.html'));
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -82,4 +79,3 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend served from: ${path.join(__dirname, 'frontend')}`);
 });
-
