@@ -1,0 +1,14 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+
+[[services]]
+name = "pallas-playground"
+startCommand = "npm start"
+[[services.ports]]
+port = 3000
+protocol = "http"

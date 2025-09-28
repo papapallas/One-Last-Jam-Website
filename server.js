@@ -31,13 +31,23 @@ app.use('/api/artists', artistRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Health check endpoint
+// Health check endpoint (Railway requires this)
 app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'OK', 
         message: 'Pallas Playground API is running',
         timestamp: new Date().toISOString(),
-        environment: process.env.NODE_ENV
+        environment: process.env.NODE_ENV,
+        port: PORT
+    });
+});
+
+// Root endpoint (Railway health check)
+app.get('/', (req, res) => {
+    res.json({ 
+        status: 'OK', 
+        message: 'Pallas Playground is running',
+        timestamp: new Date().toISOString()
     });
 });
 
@@ -64,7 +74,8 @@ app.use((req, res) => {
     });
 });
 
-app.listen(PORT, () => {
+// Listen on Railway dynamic port
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Pallas Playground Backend running on port ${PORT}`);
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend served from: ${path.join(__dirname, '../frontend')}`);
