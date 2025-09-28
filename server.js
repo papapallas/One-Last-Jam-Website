@@ -79,3 +79,14 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`📊 Environment: ${process.env.NODE_ENV}`);
     console.log(`🌐 Frontend served from: ${path.join(__dirname, 'frontend')}`);
 });
+
+// ADD THESE GRACEFUL SHUTDOWN HANDLERS:
+process.on('SIGTERM', () => {
+    console.log('🛑 Received SIGTERM, shutting down gracefully...');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('🛑 Received SIGINT, shutting down gracefully...');
+    process.exit(0);
+});
