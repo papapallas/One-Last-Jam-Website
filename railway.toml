@@ -2,13 +2,13 @@
 builder = "nixpacks"
 
 [deploy]
-healthcheckPath = "/"
+healthcheckPath = "/api/health"
 healthcheckTimeout = 100
 restartPolicyType = "ON_FAILURE"
 
 [[services]]
 name = "pallas-playground"
-startCommand = "npm start"
+startCommand = "node backend/server.js"
 [[services.ports]]
 port = 3000
 protocol = "http"
